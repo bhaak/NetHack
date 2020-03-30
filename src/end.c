@@ -422,6 +422,24 @@ register struct monst *mtmp;
 		    Sprintf(eos(buf), " called %s", NAME(mtmp));
 	}
 
+    if (mtmp->cham != CHAM_ORDINARY) {
+        char *shape_changer;
+        char tmp_buf[BUFSZ];
+
+        switch (mtmp->cham) {
+            case CHAM_CHAMELEON:    shape_changer = "chameleon imitating";  break;
+            case CHAM_DOPPELGANGER: shape_changer = "doppelganger of"; break;
+            case CHAM_SANDESTIN:    shape_changer = "sandestin imitating"; break;
+            default:                shape_changer = "copy of"; break;
+        }
+
+        Strcpy(tmp_buf, buf);
+        snprintf(buf, BUFSZ, "%s %s", shape_changer,
+                (killer_format == KILLED_BY_AN) ? an(tmp_buf) : tmp_buf);
+        killer_format = KILLED_BY_AN;
+    }
+
+
 	if (multi) {
 	    if (strlen(multi_txt) > 0)
 		Sprintf(eos(buf), ", while %s", multi_txt);

@@ -342,6 +342,12 @@ struct toptenentry *tt;
           aligns[1 - u.ualignbase[A_ORIGINAL]].filecode);
 #endif
 
+#ifndef GOLDOBJ
+  (void)fprintf(rfile, SEP "gold=%ld", u.ugold); /* hidden_gold() is not needed anymore */
+#else
+  (void)fprintf(rfile, SEP "gold=%ld", money_cnt(invent));
+#endif
+
   (void)fprintf(rfile, "\n");
 
 }
